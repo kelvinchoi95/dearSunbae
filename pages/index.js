@@ -127,7 +127,7 @@ function Index({ user, postsData, errorLoading }) {
 
       <Segment>
         <CreatePost user={user} setPosts={setPosts} />
-        <section class="main display-flex">
+        {/*<section class="main display-flex"> */}
             <div class="container-fluid py-5 " style={{ backgroundImage: "url(/img/homepageImage.png)"}}>
 
                 <div class="row py-5">
@@ -208,7 +208,7 @@ function Index({ user, postsData, errorLoading }) {
                         </div>
                     </div>
             </div>
-        </section>
+        {/*</section> */}
         <InfiniteScroll
           hasMore={hasMore}
           next={fetchDataOnScroll}
