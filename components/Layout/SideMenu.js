@@ -38,9 +38,16 @@ function SideMenu({
         
         <br/> 
   
-        <Link href="/signedInHomepage">
+        {/*<Link href="/signedInHomepage">
           <List.Item active={isActive("/signedInHomepage")}>
             <Icon name="home" size="large" color={isActive("/signedInHomepage") && "teal"} />
+            <List.Content>{pc && <List.Header content="Homepage" />}</List.Content>
+          </List.Item>
+        </Link>
+      <br /> */}
+      <Link href="/home">
+          <List.Item active={isActive("/home")}>
+            <Icon name="home" size="large" color={isActive("/home") && "teal"} />
             <List.Content>{pc && <List.Header content="Homepage" />}</List.Content>
           </List.Item>
         </Link>

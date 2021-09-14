@@ -15,6 +15,7 @@ class MyApp extends App {
     const protectedRoutes =
       ctx.pathname === "/" ||
       ctx.pathname === "/signedInHomepage" ||
+      ctx.pathname === "/home" ||
       ctx.pathname === "/[username]" ||
       ctx.pathname === "/notifications" ||
       ctx.pathname === "/post/[postId]" ||
