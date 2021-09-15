@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-
+import Link from "next/link";
+import { Button, Card } from "antd";
 import axios from "axios";
 import baseUrl from "../utils/baseUrl";
 import { parseCookies } from "nookies";
 import cookie from "js-cookie";
 
 
-function Home() {
+function Home({ user }) {
   //const [loggedUserFollowStats, setUserFollowStats] = useState(userFollowStats);
 
   /*useEffect(() => {
