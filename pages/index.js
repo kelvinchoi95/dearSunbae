@@ -15,10 +15,7 @@ import getUserInfo from "../utils/getUserInfo";
 import MessageNotificationModal from "../components/Home/MessageNotificationModal";
 import newMsgSound from "../utils/newMsgSound";
 import NotificationPortal from "../components/Home/NotificationPortal";
-import Link from "next/link";
-import { Button, Card } from "antd";
-//import { Context } from "../context";
-import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 function Index({ user, postsData, errorLoading }) {
   const [posts, setPosts] = useState(postsData || []);
