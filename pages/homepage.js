@@ -19,7 +19,7 @@ import { PostDeleteToastr } from "../components/Layout/Toastr";
 import Link from "next/link";
 import { Button, Card } from "antd";
 //import { Context } from "../context";
-import 'bootstrap/dist/css/bootstrap.min.css';
+//import 'bootstrap/dist/css/bootstrap.min.css';
 function HomePage({ user }) {
   const router = useRouter();
 
