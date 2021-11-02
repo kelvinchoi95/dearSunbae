@@ -4,8 +4,10 @@ import { parseCookies, destroyCookie } from "nookies";
 import baseUrl from "../utils/baseUrl";
 import { redirectUser } from "../utils/authUser";
 import Layout from "../components/Layout/Layout";
+//import "../public/styles.css";
 import "react-toastify/dist/ReactToastify.css";
 import "semantic-ui-css/semantic.min.css";
+
 
 class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {

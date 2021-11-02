@@ -7,7 +7,8 @@ import { parseCookies } from "nookies";
 import Link from "next/link";
 import { Button, Card } from "antd";
 //import { Context } from "../context";
-import 'bootstrap/dist/css/bootstrap.min.css';
+//import 'bootstrap/dist/css/bootstrap.min.css';
+
 //import './public/styles.css';
 function signedInHomepage({ user }) {
     console.log("user is: " + user.username);
@@ -27,8 +28,10 @@ type = "image/x-icon"></link>
 </head>
         
 
+        <body>
         
         <section class="main display-flex">
+            
             <div class="container-fluid py-5 " style={{ backgroundImage: "url(/img/homepageImage.png)"}}>
 
                 <div class="row py-5">
@@ -42,7 +45,7 @@ type = "image/x-icon"></link>
 
                         <Link href={`/${user.username}`} className="btn btn-primary">
                         
-                            <Button style={{borderRadius: '50px'}}>Find Your Sunbae</Button>
+                            <Button style={{borderRadius: '30px'}}>Find Your Sunbae</Button>
                         </Link>
                         </div> 
                             
@@ -99,6 +102,8 @@ type = "image/x-icon"></link>
                                     <li>Schedule 1 on 1 meeting</li>
                                     <li>Receive email for meeting link</li>
                                     <li>Give feedback to Dear Sunbae Team.</li>
+                                    <li>asdfsdf</li>
+                            
                                 </ol>
                             </Card>
                             
@@ -119,13 +124,18 @@ type = "image/x-icon"></link>
                         </div>
                     </div>
             </div>
+            
         </section>
+        
+        </body>
 
 
         
     </>
   );
 }
+
+
 signedInHomepage.getInitialProps = async ctx => {
     try {
     console.log("in signedinhomepage initial props");
@@ -153,3 +163,4 @@ signedInHomepage.getInitialProps = async ctx => {
 
 
 export default signedInHomepage;
+

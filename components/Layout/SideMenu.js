@@ -46,14 +46,14 @@ function SideMenu({
         </Link>
       <br /> */}
       <Link href="/home">
-          <List.Item active={isActive("/home")}>
+          <List.Item id="listitem" active={isActive("/home")} >
             <Icon name="home" size="large" color={isActive("/home") && "teal"} />
             <List.Content>{pc && <List.Header content="Homepage" />}</List.Content>
           </List.Item>
         </Link>
         <br />
         <Link href="/">
-          <List.Item active={isActive("/")}>
+          <List.Item id="listitem" active={isActive("/")}>
             <Icon name="desktop" size="large" color={isActive("/") && "teal"} />
             <List.Content>{pc && <List.Header content="Dashboard" />}</List.Content>
           </List.Item>
@@ -61,7 +61,7 @@ function SideMenu({
         <br />
 
         <Link href="/messages">
-          <List.Item active={isActive("/messages")}>
+          <List.Item id="listitem" active={isActive("/messages")}>
             <Icon
               name={unreadMessage ? "hand point right" : "mail outline"}
               size="large"
@@ -73,7 +73,7 @@ function SideMenu({
         <br />
 
         <Link href="/notifications">
-          <List.Item active={isActive("/notifications")}>
+          <List.Item id="listitem" active={isActive("/notifications")}>
             <Icon
               name={unreadNotification ? "hand point right" : "bell outline"}
               size="large"
@@ -87,7 +87,7 @@ function SideMenu({
         <br />
 
         <Link href={`/${username}`}>
-          <List.Item active={router.query.username === username}>
+          <List.Item id="listitem" active={router.query.username === username}>
             <Icon
               name="user"
               size="large"
@@ -98,7 +98,7 @@ function SideMenu({
         </Link>
         <br />
 
-        <List.Item onClick={() => logoutUser(email)}>
+        <List.Item id="listitem" onClick={() => logoutUser(email)}>
           <Icon name="log out" size="large" />
           <List.Content>{pc && <List.Header content="Logout" />}</List.Content>
         </List.Item>

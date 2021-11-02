@@ -61,7 +61,7 @@ function CardPost({ post, user, setPosts, setShowToastr, socket }) {
       )}
 
       <Segment basic>
-        <Card color="teal" fluid>
+        <Card color="teal" fluid style={{backgroundColor: '#BCC8C6'}}>
           {post.picUrl && (
             <Image
               src={post.picUrl}
@@ -74,7 +74,7 @@ function CardPost({ post, user, setPosts, setShowToastr, socket }) {
             />
           )}
 
-          <Card.Content>
+          <Card.Content color="red">
             <Image floated="left" src={post.user.profilePicUrl} avatar circular />
 
             {(user.role === "root" || post.user._id === user._id) && (

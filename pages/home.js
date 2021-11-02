@@ -28,7 +28,7 @@ function Home({ user }) {
   */
   return (
     <>
-    <div>
+    <div className="about">
         
         <div class="container-fluid py-5 " style={{ backgroundImage: "url(/img/homepageImage.png)"}}>
 
@@ -89,6 +89,7 @@ function Home({ user }) {
                                     <li>Schedule 1 on 1 meeting</li>
                                     <li>Receive email for meeting link</li>
                                     <li>Give feedback to Dear Sunbae Team.</li>
+                                    
                                 </ol>
                             </Card>
                             
