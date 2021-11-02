@@ -57,3 +57,11 @@ li {
 #listitem {
   background-color: #FF8767;
 }
+
+Form.Input {
+  background-color: red;
+}
+
+Form.Input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: black;
+}

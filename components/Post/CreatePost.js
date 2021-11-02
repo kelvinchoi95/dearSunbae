@@ -32,7 +32,8 @@ function CreatePost({ user, setPosts }) {
     border: "dotted",
     paddingTop: media === null && "60px",
     cursor: "pointer",
-    borderColor: highlighted ? "green" : "black"
+    borderColor: highlighted ? "green" : "black",
+    backgroundColor: "#BCC8C6",
   });
 
   const handleSubmit = async e => {
@@ -81,6 +82,7 @@ function CreatePost({ user, setPosts }) {
             onChange={handleChange}
             rows={4}
             width={14}
+            style={{backgroundColor: "#BCC8C6"}}
           />
         </Form.Group>
 
@@ -91,7 +93,9 @@ function CreatePost({ user, setPosts }) {
             onChange={handleChange}
             label="Add Location"
             icon="map marker alternate"
+            style={{backgroundColor: "#BCC8C6"}}
             placeholder="Want to add Location?"
+            
           />
 
           <input
@@ -101,6 +105,7 @@ function CreatePost({ user, setPosts }) {
             style={{ display: "none" }}
             type="file"
             accept="image/*"
+            
           />
         </Form.Group>
 
@@ -125,7 +130,7 @@ function CreatePost({ user, setPosts }) {
             setMediaPreview(URL.createObjectURL(droppedFile[0]));
           }}>
           {media === null ? (
-            <Icon name="plus" size="big" />
+            <Icon name="plus" size="big"  />
           ) : (
             <>
               <Image
@@ -134,6 +139,7 @@ function CreatePost({ user, setPosts }) {
                 alt="PostImage"
                 centered
                 size="medium"
+                
               />
             </>
           )}
