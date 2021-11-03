@@ -11,6 +11,8 @@ const HeadTags = () => (
 
       <link rel="stylesheet" type="text/css" href="/styles.css" />
       <link rel="stylesheet" type="text/css" href="/nprogress.css" />
+      
+
 
       <title>Dear Sunbae</title>
     </Head>

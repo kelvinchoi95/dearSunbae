@@ -30,7 +30,7 @@ function SideMenu({
             src="/logo2cropped2.png"
             alt="Logo"
             className="img-thumbnail"
-            style={{margin:"0,0,0,0" ,width: '150px', height: '70px', paddingTop:15, paddingBottom:0 ,float:"left", verticalAlign: "bottom"}}
+            style={{margin:"0,0,0,0" ,width: '150px', height: '70px', paddingTop:15, paddingBottom:0 ,float:"left", verticalAlign: "bottom", backgroundColor: "#00ACBE", border: 0}}
           />
           </List.Item>
             {/*</List.Item>

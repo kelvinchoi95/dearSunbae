@@ -5,8 +5,11 @@ import baseUrl from "../utils/baseUrl";
 import { redirectUser } from "../utils/authUser";
 import Layout from "../components/Layout/Layout";
 //import "../public/styles.css";
+import 'antd/dist/antd.css';
+
 import "react-toastify/dist/ReactToastify.css";
 import "semantic-ui-css/semantic.min.css";
+import 'bootstrap/dist/css/bootstrap.css'
 
 
 class MyApp extends App {

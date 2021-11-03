@@ -30,7 +30,7 @@ function Home({ user }) {
     <>
     <div className="about">
         
-        <div class="container-fluid py-5 " style={{ backgroundImage: "url(/img/homepageImage.png)"}}>
+        <div class="container-fluid py-5 " style={{ backgroundImage: "url(/img/homepagepic.png)"}}>
 
                 <div class="row py-5">
                     
@@ -39,11 +39,11 @@ function Home({ user }) {
                         
                         
                         <div>
-                        <h1 className="pt-5">Discover New Career Paths and Gain Insight</h1>
+                        <h1 className="pt-0" style={{color: "#23305B"}}><strong>Discover New Career Paths and Gain Insight</strong> </h1>
 
                         <Link href={`/${user.username}`} className="btn btn-primary">
                         
-                            <Button style={{borderRadius: '50px'}}>Find Your Sunbae</Button>
+                            <Button type="primary" shape="round" style={{marginTop: 90}}>Find Your Sunbae</Button>
                         </Link>
                         </div> 
                             
@@ -54,9 +54,12 @@ function Home({ user }) {
             </div>
     </div>
 
-    <div class = "container-fluid py-4 bg" >
-                <h1 class=" text-center">About Us</h1>
-                
+    
+
+    <div class = "container-fluid py-4 bg pt-5 pb-5" >
+      <Card style = {{borderRadius: '25px'}}>
+      <h1 class=" text-center" style ={{paddingBottom: "10px", color: "#23305B"}}><strong>About Us</strong></h1>
+                {/*
                 <div class="divider-custom divider-light">
                     <div class="divider-custom-line"></div>
                     <div class="divider-custom-icon">
@@ -67,6 +70,7 @@ function Home({ user }) {
                     </div>
                     <div class="divider-custom-line"></div>
                  </div>
+                */}
                 
 
 
@@ -74,13 +78,17 @@ function Home({ user }) {
                     <p class="text-center">Dear Sunbae is an online platform meant for students and individuals who want to connect with experienced individuals who provide professional insight in educational/career path settings.</p>
 
                 </div>
-            </div>
+      </Card>
+                
+    </div>
 
             <div>
-                <h1 class="container-fluid py-3 text-center">How it Works</h1>
+            <Card style={{borderRadius: '25px'}}>
+                <h1 class="container-fluid py-3 text-center" style={{textAlign: "center"}}><strong>How it Works</strong></h1>
                     <div className="row">
+                      
                         <div className=" col-md-6 text-center">
-                            <Card style={{ border:'#923737', borderRadius: '25px'}} title="As a Hoobae">
+                            <Card style={{ border:'#923737', borderRadius: '25px'}} title={<strong>As a Hoobae</strong>}>
                                 <ol>
                                     <li>Register as a Hoobae</li>
                                     <li>Find and connect with a Sunbae</li>
@@ -96,19 +104,21 @@ function Home({ user }) {
                         </div>
 
                         <div className="  col-md-6 text-center">
-                            <Card title="As a Sunbae">
+                            <Card style={{ border:'#923737', borderRadius: '25px'}} title={<strong>As a Sunbae</strong>}>
                                 <ol>
                                     <li>Register as a Sunbae</li>
                                     <li>Accept a Hoobae’s request to connect</li>
                                     <li>Give brief introduction in messenger</li>
                                     <li>Schedule 1 on 1 meeting</li>
                                     <li>Receive email for meeting link</li>
-                                    <li>Receive payment from Dear Sunbae Team via Stripe</li>
+                                    <li>Receive payment from Dear Sunbae Team via PayPal</li>
                                     <li>Give feedback to Dear Sunbae Team</li>
                                 </ol>
                             </Card>
                         </div>
+                        
                     </div>
+                    </Card>
             </div>
     </>
   );

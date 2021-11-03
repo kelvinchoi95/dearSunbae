@@ -46,6 +46,7 @@
 
 body {
   background-color: #00ACBE;
+  /*background-color: #636B74; */
 }
 
 p {
@@ -64,4 +65,8 @@ Form.Input {
 
 Form.Input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   color: black;
+}
+
+Card {
+  color: yellow;
 }
