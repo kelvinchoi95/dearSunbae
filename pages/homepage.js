@@ -30,8 +30,8 @@ function HomePage({ user }) {
   }, []);
   */
   return (
-    <div id="loggedouthome">
-    <div className="about" style={{left: "3000px"}}>
+    <div id="loggedouthome"  style={{marginLeft: "-500px", width: "250%"}}>
+    <div className="about">
         
         <div class="container-fluid py-5 " style={{ backgroundImage: "url(/img/homepagepic.png)"
 }}>
