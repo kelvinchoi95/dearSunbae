@@ -27,7 +27,7 @@ function Layout({ children, user }) {
   Router.onRouteChangeError = () => nprogress.done();
 
   return (
-    <body style={{backgroundColor: "#00ACBE"}}>
+    <body style={{backgroundColor: "#CACCCE"}}>
       <HeadTags />
       {user ? (
         <>

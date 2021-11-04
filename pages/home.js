@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { Button, Card } from "antd";
+import { List, Icon } from "semantic-ui-react";
+import { Button, Card} from "antd";
+
+
 import axios from "axios";
 import baseUrl from "../utils/baseUrl";
 import { parseCookies } from "nookies";
@@ -30,7 +33,8 @@ function Home({ user }) {
     <>
     <div className="about">
         
-        <div class="container-fluid py-5 " style={{ backgroundImage: "url(/img/homepagepic.png)"}}>
+        <div class="container-fluid py-5 " style={{ backgroundImage: "url(/img/homepagepic.png)"
+}}>
 
                 <div class="row py-5">
                     
@@ -39,7 +43,7 @@ function Home({ user }) {
                         
                         
                         <div>
-                        <h1 className="pt-0" style={{color: "#23305B"}}><strong>Discover New Career Paths and Gain Insight</strong> </h1>
+                        <h1 className="pt-0" style={{color: "#CC6633"}}><strong>Broaden Your Network And Opportunities In No Time </strong> </h1>
 
                         <Link href={`/${user.username}`} className="btn btn-primary">
                         
@@ -57,8 +61,10 @@ function Home({ user }) {
     
 
     <div class = "container-fluid py-4 bg pt-5 pb-5" >
-      <Card style = {{borderRadius: '25px'}}>
-      <h1 class=" text-center" style ={{paddingBottom: "10px", color: "#23305B"}}><strong>About Us</strong></h1>
+      <div className="row">
+        <div className="col-md-4 offset-md-4">
+        <Card style = {{borderRadius: '25px'}}>
+      <h1 class=" text-center" style ={{paddingBottom: "10px", color: "#CC6633"}}><strong>About Us</strong></h1>
                 {/*
                 <div class="divider-custom divider-light">
                     <div class="divider-custom-line"></div>
@@ -75,13 +81,105 @@ function Home({ user }) {
 
 
                 <div>
-                    <p class="text-center">Dear Sunbae is an online platform meant for students and individuals who want to connect with experienced individuals who provide professional insight in educational/career path settings.</p>
+                    <p class="text-center">Dear Sunbae is an online platform meant for students and individuals desiring to connect with experienced individuals who provide professional insight in educational/career path settings.</p>
 
                 </div>
       </Card>
+        </div>
+      </div>
+      <div class = "container-fluid py-4 bg pt-5 pb-5" style={{textAlign: "center"}} >
+
+      <div className="row pb-4" >
+        <div className="col-md-4 offset-md-2">
+            <Card id="featurecard">
+            <Icon name="user outline" size="large"  />
+
+              <h2>Follow Others</h2>
+            </Card>
+        </div>
+        <div className="col-md-4">
+          <Card id="featurecard" >
+          <Icon name="mail outline" size="large"  />
+
+            <h2>Messaging</h2>
+          </Card>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-md-4 offset-md-2">
+            <Card id="featurecard">
+            <Icon name="video" size="large"  />
+
+              <h2>Schedule a Google Meet Call</h2>
+            </Card>
+        </div>
+        <div className="col-md-4">
+          <Card id="featurecard">
+          <Icon name="edit outline" size="large"  />
+
+            <h2>Create and Share Posts</h2>
+          </Card>
+        </div>
+      </div>
+      </div>
+
+
+    <br/>
+    <br/>
+    <br/>
+    <div className="row pb-4">
+      <div className="col md-3">
+          <Card id="howitworks" style={{borderRadius: '25px'}}>
+                <h1 style={{borderBottom: "solid #00A0DC", paddingBottom: "10px"}}><strong>As a Hoobae</strong></h1>
+                <ol style={{paddingTop: "20px"}}>
+                                    <li>Register as a Hoobae</li>
+                                    <li>Find and connect with a Sunbae</li>
+                                    <li>Give brief introduction in messenger</li>
+                                    <li>Pay via PayPal</li>
+                                    <li>Schedule 1 on 1 meeting</li>
+                                    <li>Receive email for meeting link</li>
+                                    <li>Give feedback to Dear Sunbae Team.</li>
+                                    
+                </ol>
+          </Card>
+      </div>
+
+      <div className="col md-3">
+      <Card id="howitworks"  style={{borderRadius: '25px', backgroundImage: "url(/img/homepagepic3.png)"}}>
                 
+          </Card>
+        
+      </div>
     </div>
 
+    <div className="row">
+      <div className="col md-3">
+      <Card id="howitworks"  style={{borderRadius: '25px', backgroundImage: "url(/img/homepagepic4.jpg)"}}>
+                
+          </Card>
+      </div>
+
+      <div className="col md-3">
+      <Card id="howitworks" style={{borderRadius: '25px'}}>
+                <h1 style={{borderBottom: "solid #00A0DC", paddingBottom: "10px"}}><strong>As a Sunbae</strong></h1>
+                <ol style={{paddingTop: "20px"}}>
+                                    <li>Register as a Sunbae</li>
+                                    <li>Accept a Hoobae’s request to connect</li>
+                                    <li>Give brief introduction in messenger</li>
+                                    <li>Schedule 1 on 1 meeting</li>
+                                    <li>Receive email for meeting link</li>
+                                    <li>Receive payment from Dear Sunbae Team via PayPal</li>
+                                    <li>Give feedback to Dear Sunbae Team</li>
+                                </ol>
+          </Card>
+        
+      </div>
+    </div>
+
+
+
+    </div>
+{/*
             <div>
             <Card style={{borderRadius: '25px'}}>
                 <h1 class="container-fluid py-3 text-center" style={{textAlign: "center"}}><strong>How it Works</strong></h1>
@@ -120,6 +218,7 @@ function Home({ user }) {
                     </div>
                     </Card>
             </div>
+*/}
     </>
   );
 }

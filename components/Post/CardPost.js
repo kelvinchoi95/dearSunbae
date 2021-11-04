@@ -61,7 +61,7 @@ function CardPost({ post, user, setPosts, setShowToastr, socket }) {
       )}
 
       <Segment basic>
-        <Card color="teal" fluid style={{backgroundColor: '#BCC8C6'}}>
+        <Card color="teal" fluid style={{backgroundColor: 'white'}}>
           {post.picUrl && (
             <Image
               src={post.picUrl}

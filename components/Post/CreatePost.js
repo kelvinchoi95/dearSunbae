@@ -33,7 +33,7 @@ function CreatePost({ user, setPosts }) {
     paddingTop: media === null && "60px",
     cursor: "pointer",
     borderColor: highlighted ? "green" : "black",
-    backgroundColor: "#BCC8C6",
+    backgroundColor: "white",
   });
 
   const handleSubmit = async e => {
@@ -82,7 +82,7 @@ function CreatePost({ user, setPosts }) {
             onChange={handleChange}
             rows={4}
             width={14}
-            style={{backgroundColor: "#BCC8C6"}}
+            style={{backgroundColor: "white"}}
           />
         </Form.Group>
 
@@ -93,7 +93,7 @@ function CreatePost({ user, setPosts }) {
             onChange={handleChange}
             label="Add Location"
             icon="map marker alternate"
-            style={{backgroundColor: "#BCC8C6"}}
+            style={{backgroundColor: "white"}}
             placeholder="Want to add Location?"
             
           />

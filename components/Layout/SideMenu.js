@@ -19,7 +19,7 @@ function SideMenu({
 
   return (
     <>
-      <List style={{ paddingTop: "1rem" }} size="big" verticalAlign="middle" selection>
+      <List style={{ paddingTop: "1rem"}} size="big" verticalAlign="middle" selection>
       
       {/*<Link href="/signedInHomepage">
           
@@ -27,16 +27,19 @@ function SideMenu({
             {/* <img src='../../public/img/logo2cropped2.png' alt="Logffo"height={30} style={{margin:"0 0 0 0" ,paddingTop:15, paddingBottom:0 ,float:"left", verticalAlign: "bottom"}} />} */}
             <List.Item>
             <img
-            src="/logo2cropped2.png"
+            src="/logo2cropped2black.png"
             alt="Logo"
             className="img-thumbnail"
-            style={{margin:"0,0,0,0" ,width: '150px', height: '70px', paddingTop:15, paddingBottom:0 ,float:"left", verticalAlign: "bottom", backgroundColor: "#00ACBE", border: 0}}
+            style={{margin:"0,0,0,0" ,width: '150px', height: '70px', paddingTop:15, paddingBottom:0 ,float:"left", verticalAlign: "bottom", backgroundColor: "#CACCCE", border: 0}}
           />
           </List.Item>
             {/*</List.Item>
         </Link> */}
         
         <br/> 
+        <div style={{borderBottom: "solid #00A0DC"}}>
+
+        </div>
   
         {/*<Link href="/signedInHomepage">
           <List.Item active={isActive("/signedInHomepage")}>
@@ -46,7 +49,7 @@ function SideMenu({
         </Link>
       <br /> */}
       <Link href="/home">
-          <List.Item id="listitem" active={isActive("/home")} >
+          <List.Item id="listitem" style={{paddingTop: "25px"}}active={isActive("/home")} >
             <Icon name="home" size="large" color={isActive("/home") && "teal"} />
             <List.Content>{pc && <List.Header content="Homepage" />}</List.Content>
           </List.Item>
