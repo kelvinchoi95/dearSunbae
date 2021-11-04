@@ -1,80 +1,71 @@
-import React, { useEffect, useState, useRef } from "react";
-import io from "socket.io-client";
-import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
+import Link from "next/link";
+import { List, Icon } from "semantic-ui-react";
+import { Button, Card} from "antd";
+
+
 import axios from "axios";
 import baseUrl from "../utils/baseUrl";
 import { parseCookies } from "nookies";
-import { Grid } from "semantic-ui-react";
-import { NoProfilePosts, NoProfile } from "../components/Layout/NoData";
-import CardPost from "../components/Post/CardPost";
 import cookie from "js-cookie";
-import { PlaceHolderPosts } from "../components/Layout/PlaceHolderGroup";
-import ProfileMenuTabs from "../components/Profile/ProfileMenuTabs";
-import ProfileHeader from "../components/Profile/ProfileHeader";
-import Followers from "../components/Profile/Followers";
-import Following from "../components/Profile/Following";
-import UpdateProfile from "../components/Profile/UpdateProfile";
-import Settings from "../components/Profile/Settings";
-import { PostDeleteToastr } from "../components/Layout/Toastr";
-import Link from "next/link";
-import { Button, Card } from "antd";
-//import { Context } from "../context";
-//import 'bootstrap/dist/css/bootstrap.min.css';
+
+
 function HomePage({ user }) {
-  const router = useRouter();
+  //const [loggedUserFollowStats, setUserFollowStats] = useState(userFollowStats);
 
+  /*useEffect(() => {
+    const notificationRead = async () => {
+      try {
+        await axios.post(
+          `${baseUrl}/api/notifications`,
+          {},
+          { headers: { Authorization: cookie.get("token") } }
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-
-
+    notificationRead();
+  }, []);
+  */
   return (
-    <>
-    <head>
-    
-    <title>Home</title>
-    <link rel = "icon" href = 
-    "/img/logo2cropped2.png" 
-type = "image/x-icon"></link>
-</head>
+    <div id="loggedouthome">
+    <div className="about" style={{left: "3000px"}}>
         
-
-        
-        <section class="main display-flex">
-            <div class="container-fluid py-5 " style={{ backgroundImage: "url(/img/homepageImage.png)"}}>
+        <div class="container-fluid py-5 " style={{ backgroundImage: "url(/img/homepagepic.png)"
+}}>
 
                 <div class="row py-5">
                     
 
                     <div class="col-lg-7 m-auto pt-5 text-center">
                         
-                            <div>
-                        <h1 class="pt-5">Discover New Career Paths and Gain Insight</h1>
-                        <Link href="/signup" className="btn btn-primary">
-                            <Button style={{borderRadius: '50px'}}>Join Now</Button>
-                        </Link>
-                        </div>
                         
-                           
+                        <div>
+                        <h1 className="pt-0" style={{color: "#CC6633"}}><strong>Broaden Your Network And Opportunities In No Time </strong> </h1>
+
+                        <Link href={`/signup`} className="btn btn-primary">
+                        
+                            <Button type="primary" shape="round" style={{marginTop: 90}}>Find Your Sunbae</Button>
+                        </Link>
+                        </div> 
+                            
                     </div>
 
                 </div>
 
             </div>
+    </div>
 
-            {/*<div>
-                <h1 class="container-fluid py-5 text-center">Testimonials</h1>
-                <div className="row">
-                    
-                    {createTestimonialCards(3)}
-                    
-                    
-                </div>
-                
+    
 
-            </div> */}
-
-            <div class = "container-fluid py-4 bg" >
-                <h1 class=" text-center">About Us</h1>
-                
+    <div class = "container-fluid py-4 bg pt-5 pb-5" >
+      <div className="row">
+        <div className="col-md-4 offset-md-4">
+        <Card style = {{borderRadius: '25px'}}>
+      <h1 class=" text-center" style ={{paddingBottom: "10px", color: "#CC6633"}}><strong>About Us</strong></h1>
+                {/*
                 <div class="divider-custom divider-light">
                     <div class="divider-custom-line"></div>
                     <div class="divider-custom-icon">
@@ -85,74 +76,165 @@ type = "image/x-icon"></link>
                     </div>
                     <div class="divider-custom-line"></div>
                  </div>
+                */}
                 
 
 
                 <div>
-                    <p class="text-center">Dear Sunbae is an online platform meant for students and individuals who want to connect with experienced individuals who provide professional insight in educational/career path settings.</p>
+                    <p class="text-center">Dear Sunbae is an online platform meant for students and individuals desiring to connect with experienced individuals who provide professional insight in educational/career path settings.</p>
 
                 </div>
-            </div>
+      </Card>
+        </div>
+      </div>
+      <div class = "container-fluid py-4 bg pt-5 pb-5" style={{textAlign: "center"}} >
 
+      <div className="row pb-4" >
+        <div className="col-md-4 offset-md-2">
+            <Card id="featurecard">
+            <Icon name="user outline" size="large"  />
+
+              <h2>Follow Others</h2>
+            </Card>
+        </div>
+        <div className="col-md-4">
+          <Card id="featurecard" >
+          <Icon name="mail outline" size="large"  />
+
+            <h2>Messaging</h2>
+          </Card>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-md-4 offset-md-2">
+            <Card id="featurecard">
+            <Icon name="video" size="large"  />
+
+              <h2>Schedule a Google Meet Call</h2>
+            </Card>
+        </div>
+        <div className="col-md-4">
+          <Card id="featurecard">
+          <Icon name="edit outline" size="large"  />
+
+            <h2>Create and Share Posts</h2>
+          </Card>
+        </div>
+      </div>
+      </div>
+
+
+    <br/>
+    <br/>
+    <br/>
+    <div className="row pb-4">
+      <div className="col md-3">
+          <Card id="howitworks" style={{borderRadius: '25px'}}>
+                <h1 style={{borderBottom: "solid #00A0DC", paddingBottom: "10px"}}><strong>As a Hoobae</strong></h1>
+                <ol style={{paddingTop: "20px"}}>
+                                    <li>Register as a Hoobae</li>
+                                    <li>Find and connect with a Sunbae</li>
+                                    <li>Give brief introduction in messenger</li>
+                                    <li>Pay via PayPal</li>
+                                    <li>Schedule 1 on 1 meeting</li>
+                                    <li>Receive email for meeting link</li>
+                                    <li>Give feedback to Dear Sunbae Team.</li>
+                                    
+                </ol>
+          </Card>
+      </div>
+
+      <div className="col md-3">
+      <Card id="howitworks"  style={{borderRadius: '25px', backgroundImage: "url(/img/homepagepic3.png)"}}>
+                
+          </Card>
+        
+      </div>
+    </div>
+
+    <div className="row">
+      <div className="col md-3">
+      <Card id="howitworks"  style={{borderRadius: '25px', backgroundImage: "url(/img/homepagepic4.jpg)"}}>
+                
+          </Card>
+      </div>
+
+      <div className="col md-3">
+      <Card id="howitworks" style={{borderRadius: '25px'}}>
+                <h1 style={{borderBottom: "solid #00A0DC", paddingBottom: "10px"}}><strong>As a Sunbae</strong></h1>
+                <ol style={{paddingTop: "20px"}}>
+                                    <li>Register as a Sunbae</li>
+                                    <li>Accept a Hoobae’s request to connect</li>
+                                    <li>Give brief introduction in messenger</li>
+                                    <li>Schedule 1 on 1 meeting</li>
+                                    <li>Receive email for meeting link</li>
+                                    <li>Receive payment from Dear Sunbae Team via PayPal</li>
+                                    <li>Give feedback to Dear Sunbae Team</li>
+                                </ol>
+          </Card>
+        
+      </div>
+    </div>
+
+
+
+    </div>
+{/*
             <div>
-                <h1 class="container-fluid py-3 text-center">How it Works</h1>
+            <Card style={{borderRadius: '25px'}}>
+                <h1 class="container-fluid py-3 text-center" style={{textAlign: "center"}}><strong>How it Works</strong></h1>
                     <div className="row">
+                      
                         <div className=" col-md-6 text-center">
-                            <Card title="As a Hoobae">
+                            <Card style={{ border:'#923737', borderRadius: '25px'}} title={<strong>As a Hoobae</strong>}>
                                 <ol>
                                     <li>Register as a Hoobae</li>
                                     <li>Find and connect with a Sunbae</li>
                                     <li>Give brief introduction in messenger</li>
-                                    <li>Pay via Stripe</li>
+                                    <li>Pay via PayPal</li>
                                     <li>Schedule 1 on 1 meeting</li>
                                     <li>Receive email for meeting link</li>
                                     <li>Give feedback to Dear Sunbae Team.</li>
+                                    
                                 </ol>
                             </Card>
                             
                         </div>
 
                         <div className="  col-md-6 text-center">
-                            <Card title="As a Sunbae">
+                            <Card style={{ border:'#923737', borderRadius: '25px'}} title={<strong>As a Sunbae</strong>}>
                                 <ol>
                                     <li>Register as a Sunbae</li>
                                     <li>Accept a Hoobae’s request to connect</li>
                                     <li>Give brief introduction in messenger</li>
                                     <li>Schedule 1 on 1 meeting</li>
                                     <li>Receive email for meeting link</li>
-                                    <li>Receive payment from Dear Sunbae Team via Stripe</li>
+                                    <li>Receive payment from Dear Sunbae Team via PayPal</li>
                                     <li>Give feedback to Dear Sunbae Team</li>
-                                </ol>   
+                                </ol>
                             </Card>
                         </div>
+                        
                     </div>
+                    </Card>
             </div>
-        </section>
-
-
-        
-    </>
+*/}
+    </div>
   );
 }
 /*
-HomePage.getInitialProps = async ctx => {
-    try {
-      const { username } = ctx.query;
-      const { token } = parseCookies(ctx);
-  
-      const res = await axios.get(`${baseUrl}/api/profile/${username}`, {
-        headers: { Authorization: token }
-      });
-  
-      const { profile, followersLength, followingLength} = res.data;
-      
-  
-      return { profile, followersLength, followingLength};
-    } catch (error) {
-      return { errorLoading: true };
-    }
-  };
-  */
+Notifications.getInitialProps = async ctx => {
+  try {
+    const { token } = parseCookies(ctx);
 
+    const res = await axios.get(`${baseUrl}/api/notifications`, {
+      headers: { Authorization: token }
+    });
+
+    return { notifications: res.data };
+  } catch (error) {
+    return { errorLoading: true };
+  }
+}; */
 
 export default HomePage;

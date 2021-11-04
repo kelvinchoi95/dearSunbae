@@ -44,11 +44,17 @@ function Home({ user }) {
                         
                         <div>
                         <h1 className="pt-0" style={{color: "#CC6633"}}><strong>Broaden Your Network And Opportunities In No Time </strong> </h1>
-
+                        {user ? (
                         <Link href={`/${user.username}`} className="btn btn-primary">
                         
                             <Button type="primary" shape="round" style={{marginTop: 90}}>Find Your Sunbae</Button>
+                        </Link>)
+                        : 
+                        (<Link href={"/signup"} className="btn btn-primary">
+                        
+                            <Button type="primary" shape="round" style={{marginTop: 90}}>Sign Up</Button>
                         </Link>
+                        )}
                         </div> 
                             
                     </div>

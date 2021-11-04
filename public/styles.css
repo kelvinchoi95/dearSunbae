@@ -76,6 +76,11 @@ Form.Input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   border-radius: 25%;
 }
 
+#loggedouthome {
+  width: 150%;
+  
+}
+
 Card {
   color: yellow;
 }
