@@ -1,6 +1,9 @@
 const express = require("express");
 const app = express();
-const server = require("http").Server(app);
+//const server = require("http").Server(app);
+//const io = require("socket.io")(server);
+//var http = require('http');
+const server = require("http").createServer(app);
 const io = require("socket.io")(server);
 const next = require("next");
 const dev = process.env.NODE_ENV !== "production";
@@ -123,9 +126,10 @@ nextApp.prepare().then(() => {
   app.use("/api/reset", require("./api/reset"));
   app.use("/api/payment", require("./api/payment"));
   app.all("*", (req, res) => handle(req, res));
+  
 
   server.listen(PORT, err => {
     if (err) throw err;
     console.log("Express server running");
-  });
+  }); 
 });

@@ -31,6 +31,7 @@ const Schedule = ({
   const [loading, setLoading] = useState(false);
   const [followLoading, setFollowLoading] = useState(false);
   const [price, setPrice] = useState(0);
+  const [timezone, setTimezone] = useState("");
       //date handler
       const [startDate, onStartChange] = useState(new Date());
       const [endDate, onEndChange] = useState(new Date());
@@ -58,13 +59,23 @@ const Schedule = ({
     //classification = value;
     console.log("price is: " + price);
   }
+
+  const handleTimeZone = (e,{name, value})=> {
+    //const {value} = e.target;
+    console.log("value is: " + value);
+    console.log("name is: " + name);
+    setTimezone(value);
+
+    //classification = value;
+    console.log("timezone is: " + timezone);
+  }
       
   useEffect(() => {
     
     gapi = window.gapi;
   })
-  var CLIENT_ID = "109059586625-c2kld19bnp6ofstrrmadt997q6uge4rb.apps.googleusercontent.com";
-  var API_KEY = "AIzaSyAdY5vyDbfiJic36wsoLjDevkG7KcvlsgA";
+  var CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+  var API_KEY = process.env.GOOGLE_API_KEY;
   var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"]
   var SCOPES = "https://www.googleapis.com/auth/calendar.events"
   //const Meeting = require('google-meet-api').meet;
@@ -106,14 +117,15 @@ const Schedule = ({
         console.log('loaded client')
   
         gapi.client.init({
-          apiKey: API_KEY,
-          clientId: CLIENT_ID,
+          
+          apiKey: process.env.GOOGLE_API_KEY,
+          clientId: process.env.GOOGLE_CLIENT_ID,
           discoveryDocs: DISCOVERY_DOCS,
           scope: SCOPES,
         })
   
         gapi.client.load('calendar', 'v3', () => console.log('bam!'))
-        var timezone = document.getElementById("timezone").value;
+        //var timezone = document.getElementById("timezone").value;
         console.log(timezone);
         gapi.auth2.getAuthInstance().signIn()
         .then(() => {
@@ -274,7 +286,7 @@ const Schedule = ({
         label = 'Timezone'
         options = {options}
         name = "Timezone"
-        //onChange={handleTimeZone}
+        onChange={handleTimeZone}
         placeholder='Timezone'
         required
       />

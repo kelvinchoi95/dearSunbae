@@ -36,7 +36,7 @@ const CompletedMeetings = ({
     if(responseMeeting.hoobaeConfirmation === true && responseMeeting.sunbaeConfirmation === true) {
       console.log("Both sunbae and hoobae confirmed meeting took place");
       setDisable([...disable, meeting.hoobaeConfirmation]);
-     //window.location.reload();
+     window.location.reload();
     }
 };
 
