@@ -5,7 +5,10 @@ const UserModel = require("../models/UserModel");
 const PostModel = require("../models/PostModel");
 const FollowerModel = require("../models/FollowerModel");
 const ProfileModel = require("../models/ProfileModel");
+const MeetingModel = require("../models/MeetingModel");
 const bcrypt = require("bcryptjs");
+const paypal = require('@paypal/payouts-sdk');
+
 const {
   newFollowerNotification,
   removeFollowerNotification
@@ -390,5 +393,203 @@ router.post("/settings/messagePopup", authMiddleware, async (req, res) => {
     return res.status(500).send("Server Error");
   }
 });
+
+router.post("/schedule/createMeeting", authMiddleware, async(req, res) => {
+  console.log("INSIDE MEETING API");
+  try {
+    console.log("i am in PROFILE API");
+    /*const { username } = req.params;
+
+    const user = await UserModel.findOne({ username: username.toLowerCase() });
+    console.log("user name is: " + user.username);
+    if (!user) {
+      return res.status(404).send("No User Found");
+    }*/
+    console.log(req.body);
+    //console.log(req.params);
+    console.log(req.body.sunbae);
+    const meeting = new MeetingModel({
+      sunbae: req.body.sunbae,
+      hoobae: req.body.hoobae,
+      completionTime: req.body.completionTime,
+      price: req.body.price
+
+    });
+
+    
+    await meeting.save();
+    
+    console.log(meeting);
+    return res.status(200).send("created meeting");
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send("Server Error");
+  }
+})
+
+//GET SCHOOL USERS
+router.get("/completedMeetings/:username", authMiddleware, async (req, res) => {
+  console.log("in completedMeetings api");
+  try {
+    //console.log(req);
+    const { username } = req.params;
+
+    const user = await UserModel.findOne({ username: username.toLowerCase() });
+    console.log("user name is: " + user.username);
+    //console.log("user: " + user);
+    console.log(user.email);
+    if (!user) {
+      return res.status(404).send("No User Found");
+    }
+
+    //const meetings = await MeetingModel.find({sunbae: user._id}).populate("sunbae hoobae");
+    const meetings = await MeetingModel.find({$or : [{ hoobae: user._id}, {sunbae: user._id}]}).populate("sunbae hoobae");
+    console.log("meetings are: " + meetings);
+    return res.json(meetings);
+
+    /*const profile = await ProfileModel.findOne({ user: user._id }).populate("user");
+    console.log("profile: " + profile);
+    const userEducation = profile.education;
+    console.log("found profile");
+    //find all profiles with matching school
+    const profilesResult = await ProfileModel.find({education: userEducation}).populate("user");
+    console.log("about to return profiles Result");
+    console.log("profilesResult is: " + profilesResult);
+    return res.json(profilesResult); */
+  } catch(error) {
+    console.error(error);
+  }
+});
+
+router.post("/confirmMeeting/:username", authMiddleware, async(req, res) => {
+  console.log("in confirm Meeting api");
+  try {
+    const hoobae = req.body.meeting.hoobae._id;
+    const sunbae = req.body.meeting.sunbae._id;
+    const {username} = req.params;
+    const meetingId = req.body.meeting._id;
+    console.log("meeting id is: " + req.body.meeting._id);
+    const user = await UserModel.findOne({ username: username.toLowerCase() });
+    console.log("user name is: " + user.username);
+    //console.log("user: " + user);
+    console.log(user.email);
+    if (!user) {
+      return res.status(404).send("No User Found");
+    }
+    console.log("user id is: " + user._id);
+    console.log("hoobae id is: " + req.body.meeting.hoobae._id);
+    console.log("sunbae id is: " + sunbae);
+    let currentUser = "";
+    let receiverUser = "";
+    if(hoobae.toString() === user._id.toString()) {
+      console.log("user is hoobae");
+      currentUser = hoobae.username;
+      receiverUser = sunbae.username;
+      const meeting = await MeetingModel.findByIdAndUpdate({_id: meetingId}, {hoobaeConfirmation: true});
+      await meeting.save();
+    }
+    else if(sunbae.toString() === user._id.toString()) {
+      console.log("user is sunbae");
+      currentUser = sunbae.username;
+      receiverUser = hoobae.username;
+      const meeting = await MeetingModel.findByIdAndUpdate({_id: meetingId}, {sunbaeConfirmation: true});
+      await meeting.save();
+    }
+
+    const meeting = await MeetingModel.findById(meetingId);
+    console.log("meeting details: " + meeting);
+    if(meeting.hoobaeConfirmation === true && meeting.sunbaeConfirmation === true) {
+      console.log("BOTH MEETINGS ARE TRUE");
+
+      let clientId = process.env.PAYPAL_CLIENT_ID;
+      let clientSecret = process.env.PAYPAL_SECRET;
+      
+      let environment = new paypal.core.SandboxEnvironment(clientId, clientSecret);
+      let client = new paypal.core.PayPalHttpClient(environment);
+      let price = req.body.meeting.price * 0.7;
+      let requestBody = {
+        "sender_batch_header": {
+          "recipient_type": "EMAIL",
+          "email_message": "SDK payouts test txn",
+          "note": `Meeting with ${req.body.meeting.hoobae.name} at ${req.body.meeting.completionTime}`,
+          "sender_batch_id": `Meeting with ${req.body.meeting.hoobae.name} at ${req.body.meeting.completionTime}`,
+          "email_subject": "This is a test transaction from SDK"
+        },
+        "items": [{
+          "note": `Your ${price} Payout!`,
+          "amount": {
+            "currency": "USD",
+            "value": price,
+          },
+          "receiver": "sb-8une48818512@personal.example.com",
+          "sender_item_id": "Test_txn_1"
+        }
+        /*, {
+          "note": "Your 1$ Payout!",
+          "amount": {
+            "currency": "USD",
+            "value": "1.00"
+          },
+          "receiver": "payout-sdk-2@paypal.com",
+          "sender_item_id": "Test_txn_2"
+        }, {
+          "note": "Your 1$ Payout!",
+          "amount": {
+            "currency": "USD",
+            "value": "1.00"
+          },
+          "receiver": "payout-sdk-3@paypal.com",
+          "sender_item_id": "Test_txn_3"
+        }, {
+          "note": "Your 1$ Payout!",
+          "amount": {
+            "currency": "USD",
+            "value": "1.00"
+          },
+          "receiver": "payout-sdk-4@paypal.com",
+          "sender_item_id": "Test_txn_4"
+        }, {
+          "note": "Your 1$ Payout!",
+          "amount": {
+            "currency": "USD",
+            "value": "1.00"
+          },
+          "receiver": "payout-sdk-5@paypal.com",
+          "sender_item_id": "Test_txn_5"
+        } */
+      ]
+      }
+      
+      // Construct a request object and set desired parameters
+      // Here, PayoutsPostRequest() creates a POST request to /v1/payments/payouts
+      let request = new paypal.payouts.PayoutsPostRequest();
+      request.requestBody(requestBody);
+      
+      // Call API with your client and get a response for your call
+      createPayouts  = async function(){
+          console.log("IN CREATE PAYOUT FUNCTION");
+            let response = await client.execute(request);
+            console.log(`Response: ${JSON.stringify(response)}`);
+            // If call returns body in response, you can get the deserialized version from the result attribute of the response.
+            console.log(`Payouts Create Response: ${JSON.stringify(response.result)}`);
+      }
+
+      try {
+        await createPayouts();
+        console.log("PAYOUTS SENT");
+      } catch(error) {
+        console.error(error);
+      }
+      
+
+    }
+    return res.json(meeting);
+
+
+
+  }catch(error) {
+    console.error(error);
+  }
+})
 
 module.exports = router;

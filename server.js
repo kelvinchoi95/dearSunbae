@@ -6,6 +6,8 @@ const next = require("next");
 const dev = process.env.NODE_ENV !== "production";
 const nextApp = next({ dev });
 const handle = nextApp.getRequestHandler();
+
+
 require("dotenv").config({ path: "./config.env" });
 const connectDb = require("./utilsServer/connectDb");
 connectDb();
@@ -20,6 +22,7 @@ const {
 } = require("./utilsServer/messageActions");
 
 const { likeOrUnlikePost } = require("./utilsServer/likeOrUnlikePost");
+//const {addMeeting} = require("./utils/addMeeting");
 
 io.on("connection", socket => {
   socket.on("join", async ({ userId }) => {
@@ -118,7 +121,7 @@ nextApp.prepare().then(() => {
   app.use("/api/notifications", require("./api/notifications"));
   app.use("/api/chats", require("./api/chats"));
   app.use("/api/reset", require("./api/reset"));
-
+  app.use("/api/payment", require("./api/payment"));
   app.all("*", (req, res) => handle(req, res));
 
   server.listen(PORT, err => {

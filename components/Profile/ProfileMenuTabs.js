@@ -53,6 +53,13 @@ function ProfileMenuTabs({
               active={activeItem === "network"}
               onClick={() => handleItemClick("network")}
             />
+            {profile.classification === 'sunbae' && (
+              <Menu.Item
+              name='Completed Meetings'
+              active={activeItem === "completedMeetings"}
+              onClick={() => handleItemClick("completedMeetings")}
+            />
+            )}
           </>
         ) : (
           <>

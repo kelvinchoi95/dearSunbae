@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Image, List } from "semantic-ui-react";
+import { Button, Image, List, Container, Card, Icon } from "semantic-ui-react";
 import Spinner from "../Layout/Spinner";
 import { NoFollowData } from "../Layout/NoData";
 import { followUser, unfollowUser } from "../../utils/profileActions";
@@ -23,10 +23,36 @@ const Network = ({
   const [occupationUsers, setOccupationUsers] = useState([]);
   const [companyUsers, setCompanyUsers] = useState([]);
   const [sunbaes, setSunbaes] = useState([]);
-  function capitalize(s)
+  /*function capitalize(s)
   {
       return s[0].toUpperCase() + s.slice(1);
+  }*/
+  function capitalize(words) {
+    var separateWord = words.toLowerCase().split(' ');
+    for (var i = 0; i < separateWord.length; i++) {
+       separateWord[i] = separateWord[i].charAt(0).toUpperCase() +
+       separateWord[i].substring(1);
+    }
+    return separateWord.join(' ');
+ }
+ const showCards = (classType) => {
+   console.log("i am in show card function");
+  let showCards = document.getElementsByClassName(classType);
+  console.log("length is: " + showCards.length);
+  if(showCards.length > 0) {
+    for(let i = 0; i < showCards.length; i++) {
+      if(showCards[i].style.display === 'none') {
+        showCards[i].style.display = "block";
+      }
+      else {
+        showCards[i].style.display = "none";
+      }
+    }
   }
+  
+  
+  
+}
   useEffect(() => {
     const getSchoolUsers = async () => {
       setLoading(true);
@@ -90,6 +116,8 @@ const Network = ({
       setLoading(false);
     }
 
+    
+
     getSchoolUsers();
     getOccupationUsers();
     getCompanyUsers();
@@ -97,8 +125,13 @@ const Network = ({
   }, []);
 
   return (
-    <>
-    <h2>Users Who Attend/Attended {capitalize(profile.education)}</h2>
+    <Container style={{marginTop: "25px", border: "solid", height: "150%"}}>
+    <div style={{width: "100%", borderRadius: "25px", marginTop: "20px", marginBottom: "35px"}} > 
+    <h4 style={{textAlign: "left"}}>Users Who Attend/Attended {capitalize(profile.education)} 
+    <Icon name="angle down" onClick={() => {showCards("schoolCards")}}/>
+    </h4>
+    </div>
+    <Card.Group>
       {loading ? (
         <Spinner />
       ) : schoolUsers.length > 0 ? (
@@ -114,34 +147,47 @@ const Network = ({
           return (
             <>
             {(schoolUser.user._id !== user._id) && (
+              <Card className="schoolCards" style={{border: "solid", marginLeft: "40px", marginRight: "25px", marginBottom: "25px", display: "hidden", textAlign: "center"}}>
+                  <Card.Content as="a" href={`/${schoolUser.user.username}`}>
+                              <Image
+                                avatar src={schoolUser.user.profilePicUrl}
+                                
+                              />
+                              
+                              {schoolUser.user.name}
+                              
+                          </Card.Content>
+                            
+                            <Card.Content>
+                            {capitalize(schoolUser.occupation)} at {capitalize(schoolUser.company)}
+                            <br/>
+                            {schoolUser.user._id !== user._id && (
+                              
+                                <Button
+                                  color={isFollowing ? "instagram" : "twitter"}
+                                  icon={isFollowing ? "check" : "add user"}
+                                  content={isFollowing ? "Following" : "Follow"}
+                                  disabled={followLoading}
+                                  style={{marginTop: "25px"}}
+                                  onClick={() => {
+                                    setFollowLoading(true);
             
-            <List key={schoolUser.user._id} divided verticalAlign="middle">
-              <List.Item>
-                <List.Content floated="right">
-                  {schoolUser.user._id !== user._id && (
-                    <Button
-                      color={isFollowing ? "instagram" : "twitter"}
-                      icon={isFollowing ? "check" : "add user"}
-                      content={isFollowing ? "Following" : "Follow"}
-                      disabled={followLoading}
-                      onClick={() => {
-                        setFollowLoading(true);
-
-                        isFollowing
-                          ? unfollowUser(schoolUser.user._id, setUserFollowStats)
-                          : followUser(schoolUser.user._id, setUserFollowStats);
-
-                        setFollowLoading(false);
-                      }}
-                    />
-                  )}
-                </List.Content>
-                <Image avatar src={schoolUser.user.profilePicUrl} />
-                <List.Content as="a" href={`/${schoolUser.user.username}`}>
-                  {schoolUser.user.name}
-                </List.Content>
-              </List.Item>
-            </List>
+                                    isFollowing
+                                      ? unfollowUser(schoolUser.user._id, setUserFollowStats)
+                                      : followUser(schoolUser.user._id, setUserFollowStats);
+            
+                                    setFollowLoading(false);
+                                  }}
+                                />
+                                
+                              )}
+                             
+                            
+                              </Card.Content>
+                            
+                          </Card>            
+           
+            
             )}
             </>
           );
@@ -151,7 +197,16 @@ const Network = ({
         
         <div>No Results Found </div>
         )}
-      <h2>Users Who Are Also {capitalize(profile.occupation)}s</h2>
+      </Card.Group>
+
+    <div style={{width: "100%",  borderRadius: "25px", marginTop: "15px", marginBottom: "20px"}} > 
+    <h4 style={{textAlign: "left"}}>Users Who Are Also {capitalize(profile.occupation)}s 
+    <Icon name="angle down" onClick={() => {showCards("occupationCards")}}/>
+    </h4>
+    </div>
+
+      
+      <Card.Group>
       {loading ? (
         <Spinner />
       ) : occupationUsers.length > 0 ? (
@@ -167,34 +222,46 @@ const Network = ({
           return (
             <>
             {(occupationUser.user._id !== user._id) && (
+              <Card className="occupationCards" style={{border: "solid", marginLeft: "40px", marginRight: "25px", marginBottom: "25px", display: "hidden", textAlign: "center"}}>
+                  <Card.Content as="a" href={`/${occupationUser.user.username}`}>
+                              <Image
+                                avatar src={occupationUser.user.profilePicUrl}
+                                
+                              />
+                              
+                              {occupationUser.user.name}
+                              
+                          </Card.Content>
+                            
+                            <Card.Content>
+                            {capitalize(occupationUser.occupation)} at {capitalize(occupationUser.company)}
+                            <br/>
+                            {occupationUser.user._id !== user._id && (
+                              
+                                <Button
+                                  color={isFollowing ? "instagram" : "twitter"}
+                                  icon={isFollowing ? "check" : "add user"}
+                                  content={isFollowing ? "Following" : "Follow"}
+                                  disabled={followLoading}
+                                  style={{marginTop: "25px"}}
+                                  onClick={() => {
+                                    setFollowLoading(true);
             
-            <List key={occupationUser.user._id} divided verticalAlign="middle">
-              <List.Item>
-                <List.Content floated="right">
-                  {occupationUser.user._id !== user._id && (
-                    <Button
-                      color={isFollowing ? "instagram" : "twitter"}
-                      icon={isFollowing ? "check" : "add user"}
-                      content={isFollowing ? "Following" : "Follow"}
-                      disabled={followLoading}
-                      onClick={() => {
-                        setFollowLoading(true);
-
-                        isFollowing
-                          ? unfollowUser(occupationUser.user._id, setUserFollowStats)
-                          : followUser(occupationUser.user._id, setUserFollowStats);
-
-                        setFollowLoading(false);
-                      }}
-                    />
-                  )}
-                </List.Content>
-                <Image avatar src={occupationUser.user.profilePicUrl} />
-                <List.Content as="a" href={`/${occupationUser.user.username}`}>
-                  {occupationUser.user.name}
-                </List.Content>
-              </List.Item>
-            </List>
+                                    isFollowing
+                                      ? unfollowUser(occupationUser.user._id, setUserFollowStats)
+                                      : followUser(occupationUser.user._id, setUserFollowStats);
+            
+                                    setFollowLoading(false);
+                                  }}
+                                />
+                                
+                              )}
+                             
+                            
+                              </Card.Content>
+                            
+                          </Card>
+           
             )}
             </>
           );
@@ -203,7 +270,15 @@ const Network = ({
       ) : (
         <NoFollowData followingComponent={true} />
       )}
-      <h2>Users Who Also Work At {capitalize(profile.company)}</h2>
+      </Card.Group>
+      <div style={{width: "100%",  borderRadius: "25px", marginTop: "15px", marginBottom: "20px"}} > 
+    <h4 style={{textAlign: "left"}}>Users Who Also Work At {capitalize(profile.company)} 
+    <Icon name="angle down" onClick={() => {showCards("companyCards")}}/>
+    </h4>
+    </div>
+
+      
+      <Card.Group >
       {loading ? (
         <Spinner />
       ) : companyUsers.length > 0 ? (
@@ -219,34 +294,47 @@ const Network = ({
           return (
             <>
             {(companyUser.user._id !== user._id) && (
+                <Card className="companyCards" style={{border: "solid", marginLeft: "40px", marginRight: "25px", marginBottom: "25px", display: "hidden", textAlign: "center"}}>
+                  <Card.Content as="a" href={`/${companyUser.user.username}`}>
+                              <Image
+                                avatar src={companyUser.user.profilePicUrl}
+                                
+                              />
+                              
+                              {companyUser.user.name}
+                              
+                          </Card.Content>
+                            
+                            <Card.Content>
+                            {capitalize(companyUser.occupation)} at {capitalize(companyUser.company)}
+                            <br/>
+                            {companyUser.user._id !== user._id && (
+                              
+                                <Button
+                                  color={isFollowing ? "instagram" : "twitter"}
+                                  icon={isFollowing ? "check" : "add user"}
+                                  content={isFollowing ? "Following" : "Follow"}
+                                  disabled={followLoading}
+                                  style={{marginTop: "25px"}}
+                                  onClick={() => {
+                                    setFollowLoading(true);
             
-            <List key={companyUser.user._id} divided verticalAlign="middle">
-              <List.Item>
-                <List.Content floated="right">
-                  {companyUser.user._id !== user._id && (
-                    <Button
-                      color={isFollowing ? "instagram" : "twitter"}
-                      icon={isFollowing ? "check" : "add user"}
-                      content={isFollowing ? "Following" : "Follow"}
-                      disabled={followLoading}
-                      onClick={() => {
-                        setFollowLoading(true);
+                                    isFollowing
+                                      ? unfollowUser(companyUser.user._id, setUserFollowStats)
+                                      : followUser(companyUser.user._id, setUserFollowStats);
+            
+                                    setFollowLoading(false);
+                                  }}
+                                />
+                                
+                              )}
+                             
+                            
+                              </Card.Content>
+                            
+                          </Card>
 
-                        isFollowing
-                          ? unfollowUser(companyUser.user._id, setUserFollowStats)
-                          : followUser(companyUser.user._id, setUserFollowStats);
 
-                        setFollowLoading(false);
-                      }}
-                    />
-                  )}
-                </List.Content>
-                <Image avatar src={companyUser.user.profilePicUrl} />
-                <List.Content as="a" href={`/${companyUser.user.username}`}>
-                  {companyUser.user.name}
-                </List.Content>
-              </List.Item>
-            </List>
             )}
             </>
           );
@@ -255,7 +343,13 @@ const Network = ({
       ) : (
         <NoFollowData followingComponent={true} />
       )}
-      <h2>List of Sunbaes</h2>
+        </Card.Group>
+        <div style={{width: "100%",  borderRadius: "25px", marginTop: "15px", marginBottom: "20px"}} > 
+    <h4 style={{textAlign: "left"}}>List of Sunbaes
+    <Icon name="angle down" onClick={() => {showCards("sunbaeCards")}}/>
+    </h4>
+    </div>
+      <Card.Group>
       {loading ? (
         <Spinner />
       ) : sunbaes.length > 0 ? (
@@ -270,9 +364,50 @@ const Network = ({
 
           return (
             <>
+            
             {(sunbae.user._id !== user._id) && (
             
-            <List key={sunbae.user._id} divided verticalAlign="middle">
+              <Card className="sunbaeCards" style={{border: "solid", marginLeft: "40px", marginRight: "25px", marginBottom: "25px", display: "none", textAlign: "center"}}>
+              <Card.Content as="a" href={`/${sunbae.user.username}`}>
+                  <Image
+                    avatar src={sunbae.user.profilePicUrl}
+                    
+                  />
+                  
+                  {sunbae.user.name}
+                  
+              </Card.Content>
+                
+                <Card.Content>
+                {capitalize(sunbae.occupation)} at {capitalize(sunbae.company)}
+                <br/>
+                {sunbae.user._id !== user._id && (
+                  
+                    <Button
+                      color={isFollowing ? "instagram" : "twitter"}
+                      icon={isFollowing ? "check" : "add user"}
+                      content={isFollowing ? "Following" : "Follow"}
+                      disabled={followLoading}
+                      style={{marginTop: "25px"}}
+                      onClick={() => {
+                        setFollowLoading(true);
+
+                        isFollowing
+                          ? unfollowUser(sunbae.user._id, setUserFollowStats)
+                          : followUser(sunbae.user._id, setUserFollowStats);
+
+                        setFollowLoading(false);
+                      }}
+                    />
+                    
+                  )}
+                 
+                
+                  </Card.Content>
+                
+              </Card>
+            
+            /*<List key={sunbae.user._id} divided verticalAlign="middle">
               <List.Item>
                 <List.Content floated="right">
                   {sunbae.user._id !== user._id && (
@@ -298,8 +433,10 @@ const Network = ({
                   {sunbae.user.name}
                 </List.Content>
               </List.Item>
-            </List>
+                    </List> */
+                    
             )}
+            
             </>
           );
             
@@ -307,8 +444,9 @@ const Network = ({
       ) : (
         <NoFollowData followingComponent={true} />
       )}  
+      </Card.Group>
 
-    </>
+    </Container>
   );
 };
 

@@ -16,6 +16,7 @@ import Following from "../components/Profile/Following";
 import Schedule from "../components/Profile/Schedule";
 import Network from "../components/Profile/Network";
 import UpdateProfile from "../components/Profile/UpdateProfile";
+import CompletedMeetings from "../components/Profile/CompletedMeetings";
 import Settings from "../components/Profile/Settings";
 import { PostDeleteToastr } from "../components/Layout/Toastr";
 
@@ -158,6 +159,13 @@ function ProfilePage({
                 profile={profile}
                 loggedUserFollowStats={loggedUserFollowStats}
                 setUserFollowStats={setUserFollowStats}
+                profileUserId={profile.user._id}
+              />
+            )}
+              {activeItem === "completedMeetings" && (
+              <CompletedMeetings
+                user={user}
+                profile={profile}
                 profileUserId={profile.user._id}
               />
             )}

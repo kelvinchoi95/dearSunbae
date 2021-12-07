@@ -100,6 +100,13 @@ function Index({ user, postsData, errorLoading }) {
     }
   }, []);
 
+  useEffect(() => {
+    //Check completed meeting lists for logged in user
+    //Do paypal payments for completed meetings.
+    
+    console.log("I AM HERE");
+    
+  })
   return (
     <>
       {notificationPopup && newNotification !== null && (
@@ -163,6 +170,7 @@ Index.getInitialProps = async ctx => {
   } catch (error) {
     return { errorLoading: true };
   }
+
 };
 
 export default Index;

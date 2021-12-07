@@ -26,6 +26,7 @@ class MyApp extends App {
       ctx.pathname === "/post/[postId]" ||
       ctx.pathname === "/messages" ||
       ctx.pathname === "/search";
+      
     if (!token) {
       console.log("no token ");
       destroyCookie(ctx, "token");
@@ -67,6 +68,9 @@ class MyApp extends App {
       <Layout {...pageProps}>
               <head>
       <script async defer src="https://apis.google.com/js/api.js"></script>
+      <script
+    src="https://www.paypal.com/sdk/js?client-id=AQRhxYS5AzetfdjsMc1Z50Gho5m4v0OCHULh69tX66DokmdFje3_XHAzEXN3Ni810B0gSek_NcNehwkU"> // Required. Replace YOUR_CLIENT_ID with your sandbox client ID.
+  </script>
       </head>
         <Component {...pageProps} />
       </Layout>
