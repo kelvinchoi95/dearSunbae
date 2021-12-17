@@ -522,7 +522,7 @@ router.post("/confirmMeeting/:username", authMiddleware, async(req, res) => {
             "value": price,
           },
           //"receiver": "sb-8une48818512@personal.example.com",
-          "receiver": meeting.hoobae.email,
+          "receiver": meeting.sunbae.email,
           "sender_item_id": "Test_txn_1"
         }
         /*, {
