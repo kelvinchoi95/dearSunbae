@@ -41,7 +41,7 @@ const Schedule = ({
       const style = {"layout":"vertical", "width" : "20%", marginTop: "100px"};
       const PayPalButton = window.paypal.Buttons.driver("react", {React, ReactDOM});
       const priceOptions = [
-
+        {key: 'a', text: '$1', value: 1},
         { key: 's', text: '$50 for 30 Minutes', value: 50 },
         { key: 'h', text: '$90 for 60 Minutes', value: 90 },
         
@@ -201,7 +201,7 @@ const Schedule = ({
           request.execute(event => {
             console.log(event)
             addMeetingToDB();
-            //toast.success("Event successfully created! An email notification was sent out to all attendees!");
+            toast.success("Event successfully created! An email notification was sent out to all attendees!");
             window.open(event.htmlLink);
             
           })
@@ -259,10 +259,11 @@ const Schedule = ({
   return (
     <>
     
-    <div  align="center" style={{backgroundColor: "white", height: "275px"}}>
+    <div  align="center" style={{backgroundColor: "white", height: "1000px"}}>
 
     <h1 align="center">Schedule Your Meeting With {profile.user.name}</h1>
     <p>Please Pick a Starting and End Time For Your Meeting</p>
+    <div style={{height: "275px"}}>
     <DateTimePicker
                 onChange={onStartChange}
                 value={startDate}         
@@ -327,7 +328,7 @@ const Schedule = ({
           /> 
       </Segment>
     </Form>  
-
+    </div>
       
     {/*<div class="row justify-content-center pt-2 id" style={{border:"solid"}}>
           

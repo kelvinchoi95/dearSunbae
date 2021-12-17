@@ -11,12 +11,12 @@ import "react-toastify/dist/ReactToastify.css";
 import "semantic-ui-css/semantic.min.css";
 import 'bootstrap/dist/css/bootstrap.css'
 
-
+const paypalClientId = "https://www.paypal.com/sdk/js?client-id=" + process.env.PAYPAL_CLIENT_ID;
 class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {
     const { token } = parseCookies(ctx);
     let pageProps = {};
-
+    
     const protectedRoutes =
       ctx.pathname === "/" ||
       ctx.pathname === "/signedInHomepage" ||
@@ -69,7 +69,7 @@ class MyApp extends App {
               <head>
       <script async defer src="https://apis.google.com/js/api.js"></script>
       <script
-    src="https://www.paypal.com/sdk/js?client-id=AQRhxYS5AzetfdjsMc1Z50Gho5m4v0OCHULh69tX66DokmdFje3_XHAzEXN3Ni810B0gSek_NcNehwkU"> // Required. Replace YOUR_CLIENT_ID with your sandbox client ID.
+    src={paypalClientId}> // Required. Replace YOUR_CLIENT_ID with your sandbox client ID.
   </script>
       </head>
         <Component {...pageProps} />
