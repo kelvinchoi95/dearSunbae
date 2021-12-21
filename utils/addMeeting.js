@@ -12,7 +12,7 @@ const addMeeting = async(hoobae, sunbae, endDate, price) => {
          { headers: {Authorization: cookie.get("token"), 
         }}, 
         );
-        res.send(ok);
+        //return res.status(200).send("meeting added to db");
         
         
       } catch (error) {

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, Image, List, Container, Card } from "semantic-ui-react";
 import Spinner from "../Layout/Spinner";
+import moment from "moment";
 
 import axios from "axios";
 import baseUrl from "../../utils/baseUrl";
@@ -36,10 +37,16 @@ const CompletedMeetings = ({
     if(responseMeeting.hoobaeConfirmation === true && responseMeeting.sunbaeConfirmation === true) {
       console.log("Both sunbae and hoobae confirmed meeting took place");
       setDisable([...disable, meeting.hoobaeConfirmation]);
-     window.location.reload();
+     //window.location.reload();
     }
+    window.location.reload();
 };
-
+function parseIsoDatetime(dtstr) {
+  var dt = dtstr.split(/[: T-]/).map(parseFloat);
+  var date = new Date(dt[0], dt[1] - 1, dt[2], dt[3] || 0, dt[4] || 0, dt[5] || 0, 0);
+  console.log(date);
+  return date;
+}
 
   useEffect(() => {
     const getMeetings = async () => {
@@ -79,7 +86,8 @@ const CompletedMeetings = ({
       ) : meetings.length > 0 ? (
         meetings.map(meeting => {
           //sunbaeOrHoobae(meeting);
-          
+          const date = parseIsoDatetime(meeting.completionTime);
+          console.log("date is: " + date);
           console.log("user id is: " + user._id);
           console.log("sunbae id is: " + meeting.hoobae);
           /* 
@@ -94,12 +102,16 @@ const CompletedMeetings = ({
             
           }
           */
-          /*  */
+          /* on {new Date(meeting.completionTime).getFullYear()+'-' + (new Date(meeting.completionTime).getMonth() + 1) + '-'+(new Date(meeting.completionTime).getDate() + 1)} 
+                   at {new Date(meeting.completionTime).getHours()}
+          */
           return (
+           
             <>
             {(meeting.hoobae._id === user._id) && (
             <Card style={{border: "solid", marginLeft: "40px", marginRight: "25px", marginBottom: "25px", display: "flex", textAlign: "center"}}>
-            Meeting With <Card.Content as="a" href={`/${meeting.sunbae.username}`}>
+            Meeting With <Card.Content as="a" href={`/${meeting.sunbae.username}`}> 
+            
                         <Image
                           avatar src={meeting.sunbae.profilePicUrl}
                           
@@ -108,7 +120,12 @@ const CompletedMeetings = ({
                         {meeting.sunbae.name}
                         
                     </Card.Content>
-                      
+                    
+                   on {moment(meeting.completionTime).format('YYYY-MM-DD h:mm:ss a')}
+
+                    
+                    
+                    
                       <Card.Content>
                       
                       {meeting.sunbae._id !== user._id && (
@@ -138,7 +155,7 @@ const CompletedMeetings = ({
                         {meeting.hoobae.name}
                         
                     </Card.Content>
-                      
+                    on {moment(meeting.completionTime).format('YYYY-MM-DD h:mm:ss a')}
                       <Card.Content>
                       
                       {meeting.hoobae._id !== user._id && (

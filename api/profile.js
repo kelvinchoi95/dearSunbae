@@ -503,23 +503,25 @@ router.post("/confirmMeeting/:username", authMiddleware, async(req, res) => {
 
       let clientId = process.env.PAYPAL_CLIENT_ID;
       let clientSecret = process.env.PAYPAL_SECRET;
-      
-      let environment = new paypal.core.SandboxEnvironment(clientId, clientSecret);
+      console.log("PRICE BEFORE DEDUCTION: " + req.body.meeting.price);
+      let price = req.body.meeting.price * 0.70;
+      console.log("PRICE IS: " + price);      
+      let environment = new paypal.core.ProductionEnvironment(clientId, clientSecret);
       let client = new paypal.core.PayPalHttpClient(environment);
-      let price = req.body.meeting.price * 0.7;
+
       let requestBody = {
         "sender_batch_header": {
           "recipient_type": "EMAIL",
-          "email_message": "SDK payouts test txn",
+          "email_message": `We have sent your payment of ${price} to your PayPal account.`,
           "note": `Meeting with ${req.body.meeting.hoobae.name} at ${req.body.meeting.completionTime}`,
           "sender_batch_id": `Meeting with ${req.body.meeting.hoobae.name} at ${req.body.meeting.completionTime}`,
-          "email_subject": "This is a test transaction from SDK"
+          "email_subject": "Your Paypal Payment From Dear Sunbae"
         },
         "items": [{
           "note": `Your ${price} Payout!`,
           "amount": {
             "currency": "USD",
-            "value": price,
+            "value": price.toFixed(2),
           },
           //"receiver": "sb-wi5pd8898790@personal.example.com",
           "receiver": req.body.meeting.sunbae.email,
