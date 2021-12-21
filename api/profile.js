@@ -523,8 +523,8 @@ router.post("/confirmMeeting/:username", authMiddleware, async(req, res) => {
             "currency": "USD",
             "value": price.toFixed(2),
           },
-          //"receiver": "sb-wi5pd8898790@personal.example.com",
-          "receiver": req.body.meeting.sunbae.email,
+          "receiver": "kelvinchoi95@gmail.com",
+          //"receiver": req.body.meeting.sunbae.email,
           "sender_item_id": "Test_txn_1"
         }
         /*, {
