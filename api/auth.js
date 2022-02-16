@@ -24,6 +24,7 @@ router.get("/", authMiddleware, async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
+console.log("inside post function for login");
   const { email, password } = req.body.user;
 
   if (!isEmail(email)) return res.status(401).send("Invalid Email");
@@ -36,6 +37,7 @@ router.post("/", async (req, res) => {
     const user = await UserModel.findOne({ email: email.toLowerCase() }).select(
       "+password"
     );
+    console.log("i finished db stuff");
 
     if (!user) {
       return res.status(401).send("Invalid Credentials");

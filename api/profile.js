@@ -8,12 +8,24 @@ const ProfileModel = require("../models/ProfileModel");
 const MeetingModel = require("../models/MeetingModel");
 const bcrypt = require("bcryptjs");
 const paypal = require('@paypal/payouts-sdk');
+const nodemailer = require("nodemailer");
+const sendGridTransport = require("nodemailer-sendgrid-transport");
+const isEmail = require("validator/lib/isEmail");
+const options = {
+  auth: {
+    api_key: process.env.sendGrid_api
+  }
+};
 
+const transporter = nodemailer.createTransport(sendGridTransport(options));
 const {
   newFollowerNotification,
   removeFollowerNotification
 } = require("../utilsServer/notificationActions");
 
+const {
+  sendNewMeetingEmail, sendConfirmMeetingEmail, sendPayOutEmail
+} = require("../utilsServer/sendEmail");
 //GET SCHOOL USERS
 router.get("/network/:username", authMiddleware, async (req, res) => {
   console.log("in network api");
@@ -395,9 +407,16 @@ router.post("/settings/messagePopup", authMiddleware, async (req, res) => {
 });
 
 router.post("/schedule/createMeeting", authMiddleware, async(req, res) => {
+
   console.log("INSIDE MEETING API");
   try {
     console.log("i am in PROFILE API");
+
+    
+    console.log("hoobae email is: " + req.body.hoobae.email);
+    console.log("sunbae id is: " + req.body.sunbae._id);
+    await sendNewMeetingEmail(req.body.hoobae.email, req.body.sunbae._id);
+    await sendNewMeetingEmail(req.body.sunbae.email, req.body.hoobae._id);
     /*const { username } = req.params;
 
     const user = await UserModel.findOne({ username: username.toLowerCase() });
@@ -418,7 +437,8 @@ router.post("/schedule/createMeeting", authMiddleware, async(req, res) => {
 
     
     await meeting.save();
-    
+    //create email
+
     console.log(meeting);
     return res.status(200).send("created meeting");
   } catch (error) {
@@ -427,7 +447,7 @@ router.post("/schedule/createMeeting", authMiddleware, async(req, res) => {
   }
 })
 
-//GET SCHOOL USERS
+//GET LIST OF MEETINGS
 router.get("/completedMeetings/:username", authMiddleware, async (req, res) => {
   console.log("in completedMeetings api");
   try {
@@ -487,6 +507,7 @@ router.post("/confirmMeeting/:username", authMiddleware, async(req, res) => {
       receiverUser = sunbae.username;
       const meeting = await MeetingModel.findByIdAndUpdate({_id: meetingId}, {hoobaeConfirmation: true});
       await meeting.save();
+      await sendConfirmMeetingEmail(req.body.meeting.hoobae.email, sunbae);
     }
     else if(sunbae.toString() === user._id.toString()) {
       console.log("user is sunbae");
@@ -494,6 +515,7 @@ router.post("/confirmMeeting/:username", authMiddleware, async(req, res) => {
       receiverUser = hoobae.username;
       const meeting = await MeetingModel.findByIdAndUpdate({_id: meetingId}, {sunbaeConfirmation: true});
       await meeting.save();
+      await sendConfirmMeetingEmail(req.body.meeting.sunbae.email, hoobae);
     }
 
     const meeting = await MeetingModel.findById(meetingId);
@@ -523,8 +545,8 @@ router.post("/confirmMeeting/:username", authMiddleware, async(req, res) => {
             "currency": "USD",
             "value": price.toFixed(2),
           },
-          "receiver": "kelvinchoi95@gmail.com",
-          //"receiver": req.body.meeting.sunbae.email,
+          //"receiver": "kelvinchoi95@gmail.com",
+          "receiver": req.body.meeting.sunbae.email,
           "sender_item_id": "Test_txn_1"
         }
         /*, {
@@ -579,12 +601,13 @@ router.post("/confirmMeeting/:username", authMiddleware, async(req, res) => {
 
       try {
         await createPayouts();
+        await sendPayOutEmail(req.body.meeting.sunbae.email, req.body.meeting.hoobae._id);
         console.log("PAYOUTS SENT");
       } catch(error) {
         console.error(error);
       }
       
-
+    
     }
     return res.json(meeting);
 
@@ -593,6 +616,8 @@ router.post("/confirmMeeting/:username", authMiddleware, async(req, res) => {
   }catch(error) {
     console.error(error);
   }
+
+  
 })
 
 module.exports = router;
