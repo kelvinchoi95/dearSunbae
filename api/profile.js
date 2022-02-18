@@ -528,7 +528,7 @@ router.post("/confirmMeeting/:username", authMiddleware, async(req, res) => {
       //console.log("PRICE BEFORE DEDUCTION: " + req.body.meeting.price);
       let price = req.body.meeting.price * 0.70;
       //console.log("PRICE IS: " + price);      
-      let environment = new paypal.core.ProductionEnvironment(clientId, clientSecret);
+      let environment = new paypal.core.LiveEnvironment(clientId, clientSecret);
       let client = new paypal.core.PayPalHttpClient(environment);
 
       let requestBody = {
