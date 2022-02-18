@@ -28,24 +28,24 @@ const {
 } = require("../utilsServer/sendEmail");
 //GET SCHOOL USERS
 router.get("/network/:username", authMiddleware, async (req, res) => {
-  console.log("in network api");
+  //console.log("in network api");
   try {
     const { username } = req.params;
 
     const user = await UserModel.findOne({ username: username.toLowerCase() });
-    console.log("user name is: " + user.username);
-    console.log("user: " + user);
+    //console.log("user name is: " + user.username);
+    //console.log("user: " + user);
     if (!user) {
       return res.status(404).send("No User Found");
     }
     const profile = await ProfileModel.findOne({ user: user._id }).populate("user");
-    console.log("profile: " + profile);
+    //console.log("profile: " + profile);
     const userEducation = profile.education;
-    console.log("found profile");
+    //console.log("found profile");
     //find all profiles with matching school
     const profilesResult = await ProfileModel.find({education: userEducation}).populate("user");
-    console.log("about to return profiles Result");
-    console.log("profilesResult is: " + profilesResult);
+    //console.log("about to return profiles Result");
+    //console.log("profilesResult is: " + profilesResult);
     return res.json(profilesResult);
   } catch(error) {
     console.error(error);
@@ -54,12 +54,12 @@ router.get("/network/:username", authMiddleware, async (req, res) => {
 
 //GET OCCUPATION USERS
 router.get("/networkOccupation/:username", authMiddleware, async (req, res) => {
-  console.log("in network api");
+  //console.log("in network api");
   try {
     const { username } = req.params;
 
     const user = await UserModel.findOne({ username: username.toLowerCase() });
-    console.log("user name is: " + user.username);
+    //console.log("user name is: " + user.username);
     if (!user) {
       return res.status(404).send("No User Found");
     }
@@ -76,12 +76,12 @@ router.get("/networkOccupation/:username", authMiddleware, async (req, res) => {
 });
 //GET SUNBAE USERS
 router.get("/networkSunbae/:username", authMiddleware, async (req, res) => {
-  console.log("in network api");
+  //console.log("in network api");
   try {
     const { username } = req.params;
 
     const user = await UserModel.findOne({ username: username.toLowerCase() });
-    console.log("user name is: " + user.username);
+    //console.log("user name is: " + user.username);
     if (!user) {
       return res.status(404).send("No User Found");
     }
@@ -98,12 +98,12 @@ router.get("/networkSunbae/:username", authMiddleware, async (req, res) => {
 });
 //GET COMPANY USERS
 router.get("/networkCompany/:username", authMiddleware, async (req, res) => {
-  console.log("in network api");
+  //console.log("in network api");
   try {
     const { username } = req.params;
 
     const user = await UserModel.findOne({ username: username.toLowerCase() });
-    console.log("user name is: " + user.username);
+    //console.log("user name is: " + user.username);
     if (!user) {
       return res.status(404).send("No User Found");
     }
@@ -120,11 +120,11 @@ router.get("/networkCompany/:username", authMiddleware, async (req, res) => {
 });
 // Homepage profile info
 router.get("/", async(req, res) => {
-  console.log("in get homepage profile info");
+  //console.log("in get homepage profile info");
   try{
     
     const {userId} = req;
-    console.log("userId is: " + userId);
+    //console.log("userId is: " + userId);
     const user = await UserModel.findById(userId);
     if(!user) {
       return res.status(404).send("No User Found");
@@ -138,7 +138,7 @@ router.get("/", async(req, res) => {
 // GET PROFILE INFO
 router.get("/:username", authMiddleware, async (req, res) => {
   try {
-    console.log("in get profileapi");
+    //console.log("in get profileapi");
     const { username } = req.params;
 
     const user = await UserModel.findOne({ username: username.toLowerCase() });
@@ -408,13 +408,13 @@ router.post("/settings/messagePopup", authMiddleware, async (req, res) => {
 
 router.post("/schedule/createMeeting", authMiddleware, async(req, res) => {
 
-  console.log("INSIDE MEETING API");
+  //console.log("INSIDE MEETING API");
   try {
-    console.log("i am in PROFILE API");
+    //console.log("i am in PROFILE API");
 
     
-    console.log("hoobae email is: " + req.body.hoobae.email);
-    console.log("sunbae id is: " + req.body.sunbae._id);
+    //console.log("hoobae email is: " + req.body.hoobae.email);
+    //console.log("sunbae id is: " + req.body.sunbae._id);
     await sendNewMeetingEmail(req.body.hoobae.email, req.body.sunbae._id);
     await sendNewMeetingEmail(req.body.sunbae.email, req.body.hoobae._id);
     /*const { username } = req.params;
@@ -449,13 +449,13 @@ router.post("/schedule/createMeeting", authMiddleware, async(req, res) => {
 
 //GET LIST OF MEETINGS
 router.get("/completedMeetings/:username", authMiddleware, async (req, res) => {
-  console.log("in completedMeetings api");
+  //console.log("in completedMeetings api");
   try {
     //console.log(req);
     const { username } = req.params;
 
     const user = await UserModel.findOne({ username: username.toLowerCase() });
-    console.log("user name is: " + user.username);
+    //console.log("user name is: " + user.username);
     //console.log("user: " + user);
     console.log(user.email);
     if (!user) {
@@ -464,7 +464,7 @@ router.get("/completedMeetings/:username", authMiddleware, async (req, res) => {
 
     //const meetings = await MeetingModel.find({sunbae: user._id}).populate("sunbae hoobae");
     const meetings = await MeetingModel.find({$or : [{ hoobae: user._id}, {sunbae: user._id}]}).populate("sunbae hoobae");
-    console.log("meetings are: " + meetings);
+    //console.log("meetings are: " + meetings);
     return res.json(meetings);
 
     /*const profile = await ProfileModel.findOne({ user: user._id }).populate("user");
@@ -482,27 +482,27 @@ router.get("/completedMeetings/:username", authMiddleware, async (req, res) => {
 });
 
 router.post("/confirmMeeting/:username", authMiddleware, async(req, res) => {
-  console.log("in confirm Meeting api");
+  //console.log("in confirm Meeting api");
   try {
     const hoobae = req.body.meeting.hoobae._id;
     const sunbae = req.body.meeting.sunbae._id;
     const {username} = req.params;
     const meetingId = req.body.meeting._id;
-    console.log("meeting id is: " + req.body.meeting._id);
+    //console.log("meeting id is: " + req.body.meeting._id);
     const user = await UserModel.findOne({ username: username.toLowerCase() });
-    console.log("user name is: " + user.username);
+   // console.log("user name is: " + user.username);
     //console.log("user: " + user);
     console.log(user.email);
     if (!user) {
       return res.status(404).send("No User Found");
     }
-    console.log("user id is: " + user._id);
-    console.log("hoobae id is: " + req.body.meeting.hoobae._id);
-    console.log("sunbae id is: " + sunbae);
+    //console.log("user id is: " + user._id);
+    //console.log("hoobae id is: " + req.body.meeting.hoobae._id);
+    //console.log("sunbae id is: " + sunbae);
     let currentUser = "";
     let receiverUser = "";
     if(hoobae.toString() === user._id.toString()) {
-      console.log("user is hoobae");
+      //console.log("user is hoobae");
       currentUser = hoobae.username;
       receiverUser = sunbae.username;
       const meeting = await MeetingModel.findByIdAndUpdate({_id: meetingId}, {hoobaeConfirmation: true});
@@ -510,7 +510,7 @@ router.post("/confirmMeeting/:username", authMiddleware, async(req, res) => {
       await sendConfirmMeetingEmail(req.body.meeting.hoobae.email, sunbae);
     }
     else if(sunbae.toString() === user._id.toString()) {
-      console.log("user is sunbae");
+      //console.log("user is sunbae");
       currentUser = sunbae.username;
       receiverUser = hoobae.username;
       const meeting = await MeetingModel.findByIdAndUpdate({_id: meetingId}, {sunbaeConfirmation: true});
@@ -519,15 +519,15 @@ router.post("/confirmMeeting/:username", authMiddleware, async(req, res) => {
     }
 
     const meeting = await MeetingModel.findById(meetingId);
-    console.log("meeting details: " + meeting);
+    //console.log("meeting details: " + meeting);
     if(meeting.hoobaeConfirmation === true && meeting.sunbaeConfirmation === true) {
-      console.log("BOTH MEETINGS ARE TRUE");
+      //console.log("BOTH MEETINGS ARE TRUE");
 
       let clientId = process.env.PAYPAL_CLIENT_ID;
       let clientSecret = process.env.PAYPAL_SECRET;
-      console.log("PRICE BEFORE DEDUCTION: " + req.body.meeting.price);
+      //console.log("PRICE BEFORE DEDUCTION: " + req.body.meeting.price);
       let price = req.body.meeting.price * 0.70;
-      console.log("PRICE IS: " + price);      
+      //console.log("PRICE IS: " + price);      
       let environment = new paypal.core.ProductionEnvironment(clientId, clientSecret);
       let client = new paypal.core.PayPalHttpClient(environment);
 
@@ -545,8 +545,8 @@ router.post("/confirmMeeting/:username", authMiddleware, async(req, res) => {
             "currency": "USD",
             "value": price.toFixed(2),
           },
-          //"receiver": "kelvinchoi95@gmail.com",
-          "receiver": req.body.meeting.sunbae.email,
+          "receiver": "kelvinchoi95@gmail.com",
+          //"receiver": req.body.meeting.sunbae.email,
           "sender_item_id": "Test_txn_1"
         }
         /*, {
@@ -592,7 +592,7 @@ router.post("/confirmMeeting/:username", authMiddleware, async(req, res) => {
       
       // Call API with your client and get a response for your call
       createPayouts  = async function(){
-          console.log("IN CREATE PAYOUT FUNCTION");
+          //console.log("IN CREATE PAYOUT FUNCTION");
             let response = await client.execute(request);
             console.log(`Response: ${JSON.stringify(response)}`);
             // If call returns body in response, you can get the deserialized version from the result attribute of the response.
@@ -602,7 +602,7 @@ router.post("/confirmMeeting/:username", authMiddleware, async(req, res) => {
       try {
         await createPayouts();
         await sendPayOutEmail(req.body.meeting.sunbae.email, req.body.meeting.hoobae._id);
-        console.log("PAYOUTS SENT");
+        //console.log("PAYOUTS SENT");
       } catch(error) {
         console.error(error);
       }

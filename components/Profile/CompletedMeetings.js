@@ -33,9 +33,9 @@ const CompletedMeetings = ({
     
 
     const responseMeeting = res.data;
-    console.log("meeting after api called is: " + responseMeeting.hoobaeConfirmation);
+    //console.log("meeting after api called is: " + responseMeeting.hoobaeConfirmation);
     if(responseMeeting.hoobaeConfirmation === true && responseMeeting.sunbaeConfirmation === true) {
-      console.log("Both sunbae and hoobae confirmed meeting took place");
+      //console.log("Both sunbae and hoobae confirmed meeting took place");
       setDisable([...disable, meeting.hoobaeConfirmation]);
      //window.location.reload();
     }
@@ -53,20 +53,20 @@ function parseIsoDatetime(dtstr) {
       setLoading(true);
 
       try {
-          console.log(user.username);
+          //console.log(user.username);
         const res = await axios.get(`${baseUrl}/api/profile/completedMeetings/${user.username}`, {
           headers: { Authorization: cookie.get("token") }
         });
-        console.log("back to completedmeetings.js");
-        console.log("here is the data" + res.data);
+        //console.log("back to completedmeetings.js");
+        //console.log("here is the data" + res.data);
         setMeetings(res.data);
-        console.log("meetings length is: " + meetings.length);
+        //console.log("meetings length is: " + meetings.length);
         //console.log("meetings are: " + meetings[0]);
         
         meetings.map(meeting => {
           
-          console.log("in loop");
-          console.log(meeting.completionTime);
+          //console.log("in loop");
+          //console.log(meeting.completionTime);
         })
         //console.log("occupation users: " + occupationUsers[0].user);
       } catch (error) {
@@ -87,9 +87,9 @@ function parseIsoDatetime(dtstr) {
         meetings.map(meeting => {
           //sunbaeOrHoobae(meeting);
           const date = parseIsoDatetime(meeting.completionTime);
-          console.log("date is: " + date);
-          console.log("user id is: " + user._id);
-          console.log("sunbae id is: " + meeting.hoobae);
+          //console.log("date is: " + date);
+         // console.log("user id is: " + user._id);
+          //console.log("sunbae id is: " + meeting.hoobae);
           /* 
           if(user._id === meeting.hoobae._id) {
             console.log("setting hoobae to true");

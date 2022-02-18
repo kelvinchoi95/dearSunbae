@@ -52,18 +52,18 @@ const Schedule = ({
     })
     const handleSelectChange=(e,{name, value})=> {
     //const {value} = e.target;
-    console.log("value is: " + value);
-    console.log("name is: " + name);
+    //console.log("value is: " + value);
+    //console.log("name is: " + name);
     setPrice(value);
 
     //classification = value;
-    console.log("price is: " + price);
+    //console.log("price is: " + price);
   }
 
   const handleTimeZone = (e,{name, value})=> {
     //const {value} = e.target;
-    console.log("value is: " + value);
-    console.log("name is: " + name);
+    //console.log("value is: " + value);
+    //console.log("name is: " + name);
     setTimezone(value);
 
     //classification = value;
@@ -83,7 +83,7 @@ const Schedule = ({
   
 
   const createOrder = (data, actions) =>{
-    console.log("price is: " + price);
+    //console.log("price is: " + price);
     return actions.order.create({
       purchase_units: [
         {
@@ -107,14 +107,14 @@ const Schedule = ({
   const handleClick = () => {
     
     const addMeetingToDB = async() => {
-      console.log(user.email);
-      console.log(profile.user.email);
-      console.log(price);
+      //console.log(user.email);
+      //console.log(profile.user.email);
+      //console.log(price);
       await addMeeting(user, profile.user, endDate, price);
     }
     //addMeetingToDB();
       gapi.load('client:auth2', () => {
-        console.log('loaded client')
+        //console.log('loaded client')
   
         gapi.client.init({
           
@@ -126,7 +126,7 @@ const Schedule = ({
   
         gapi.client.load('calendar', 'v3', () => console.log('bam!'))
         //var timezone = document.getElementById("timezone").value;
-        console.log(timezone);
+        //console.log(timezone);
         gapi.auth2.getAuthInstance().signIn()
         .then(() => {
           
