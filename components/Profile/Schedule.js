@@ -41,7 +41,7 @@ const Schedule = ({
       const style = {"layout":"vertical", "width" : "20%", marginTop: "100px"};
       const PayPalButton = window.paypal.Buttons.driver("react", {React, ReactDOM});
       const priceOptions = [
-        {key: 'a', text: '$3', value: 3},
+        //{key: 'a', text: '$3', value: 3},
         { key: 's', text: '$50 for 30 Minutes', value: 50 },
         { key: 'h', text: '$90 for 60 Minutes', value: 90 },
         
